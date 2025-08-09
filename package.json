@@ -1,6 +1,6 @@
 {
   "name": "bbc_clawer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A study purpose program for parsing bbc news titles and contents",
   "main": "dist/index.js",
   "type": "module",
