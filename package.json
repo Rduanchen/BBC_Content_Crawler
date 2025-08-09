@@ -1,6 +1,6 @@
 {
   "name": "bbc_clawer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A study purpose program for parsing bbc news titles and contents",
   "main": "dist/index.js",
   "type": "module",
@@ -10,6 +10,10 @@
   ],
   "directories": {
     "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rduanchen/BBC_Content_Crawler.git"
   },
   "scripts": {
     "build": "tsc",
