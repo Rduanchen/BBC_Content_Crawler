@@ -93,3 +93,52 @@ main().catch(console.error);
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Issues
+
+If you encounter any issues while using the BBC News Scraper, please check the [issues](https://github.com/Rduanchen/BBC_Scraper/issues) page for known problems and solutions. If your issue is not listed, feel free to open a new issue with a detailed description of the problem.
+
+## Self-develop guide
+
+1. Clone the repository:  
+   You will need to fork this repository first, then clone your fork. you can fork this repository from [https://github.com/Rduanchen/BBC_Scraper](https://github.com/Rduanchen/BBC_Scraper).
+
+```bash
+git clone https://github.com/<yourusername>/BBC_Scraper.git
+cd BBC_Scraper
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Start developing:
+
+```bash
+npm run dev
+```
+
+4. Run tests:
+
+```bash
+npm test
+```
+
+## Collaboration
+
+We welcome contributions to the BBC News Scraper project! If you'd like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with descriptive messages.
+4. Push your changes to your forked repository.
+5. Submit a pull request to the main repository.
+
+Please ensure that your code adheres to the project's coding standards and includes appropriate tests.
+
+## Author
+
+My name is Rduan(Justin), you can contact me via email:
+chenyouduan@gmail.com
