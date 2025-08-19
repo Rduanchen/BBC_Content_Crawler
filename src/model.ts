@@ -12,4 +12,16 @@ interface NewsTitles {
   newsLink: string;
 }
 
-export { NewsContent, NewsTitles };
+interface BBCEnviroment {
+  titlePageUrl: string | null;
+  rootUrl: string | null;
+  imageResolution: "low" | "medium" | "high" | null;
+}
+
+interface BBCConfig {
+  titlePageUrl?: string;
+  rootUrl?: string;
+  imageResolution?: "low" | "medium" | "high";
+}
+
+export { NewsContent, NewsTitles, BBCEnviroment, BBCConfig };
