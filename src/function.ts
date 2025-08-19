@@ -1,51 +1,60 @@
 import * as cheerio from "cheerio";
 import { NewsContent, NewsTitles } from "./model.js";
-import { BBC_ROOT_URL } from "./clawer.js";
+import { BBC_IMAGE_RESOLUTION } from "./clawer.js";
+
+function imageResolutionChanger(
+  imageUrl: string,
+  resolution: number = 480
+): string {
+  if (resolution !== 240 && resolution !== 480 && resolution !== 1024) {
+    throw new Error("Invalid image resolution. Use 240, 480, or 1024.");
+  }
+
+  let pattern = `/\/standard\/(\d+)\/cpsprodpb/`;
+  const match = imageUrl.match(pattern);
+  const newUrl = imageUrl.replace(
+    /\/standard\/\d+\/cpsprodpb/,
+    `/standard/${resolution}/cpsprodpb`
+  );
+
+  return newUrl;
+}
 
 async function getNewsTitle(body: string): Promise<NewsTitles[]> {
-  const $ = cheerio.load(body);
-  // 所有新聞卡片
-  const cards = $('[data-testid="dundee-card"]');
+  const $ = cheerio.load(body, { xmlMode: true }); // XML 模式
+  const items = $("item");
   const result: NewsTitles[] = [];
 
-  cards.each((i, card) => {
-    const cardElem = $(card);
+  items.each((_i, item) => {
+    const el = $(item);
 
-    const title = cardElem.find('[data-testid="card-headline"]').text().trim();
-    const description = cardElem
-      .find('[data-testid="card-description"]')
-      .text()
-      .trim();
+    const title = el.find("title").first().text().trim();
+    const description = el.find("description").first().text().trim();
+    const newsLink = el.find("link").first().text().trim();
 
-    // Find cover image URL
-    let imgURL = "";
-    const imgElem = cardElem.find("img");
-    if (imgElem.length > 0) {
-      imgURL = imgElem.attr("src") || "";
-    }
-
-    // News link
-    let newsLink = "";
-    const linkElem = cardElem.closest("a");
-    if (linkElem.length > 0) {
-      newsLink = linkElem.attr("href") || "";
+    // 嘗試從 media:thumbnail 或 enclosure 中找圖片
+    let coverUrl = "";
+    const mediaThumbnail = el.find("media\\:thumbnail, thumbnail");
+    if (mediaThumbnail.length > 0) {
+      coverUrl = mediaThumbnail.attr("url") || "";
     } else {
-      const innerLink = cardElem.find("a");
-      if (innerLink.length > 0) {
-        newsLink = innerLink.attr("href") || "";
+      const enclosure = el.find("enclosure");
+      if (enclosure.length > 0 && enclosure.attr("type")?.startsWith("image")) {
+        coverUrl = enclosure.attr("url") || "";
       }
     }
 
+    coverUrl = imageResolutionChanger(coverUrl, BBC_IMAGE_RESOLUTION);
     result.push({
-      coverUrl: imgURL,
+      coverUrl,
       title,
       description,
-      newsLink: newsLink.startsWith("/") ? BBC_ROOT_URL + newsLink : newsLink,
+      newsLink,
     });
   });
+
   return result;
 }
-
 async function getNewsContent(body: string): Promise<NewsContent> {
   const $ = cheerio.load(body);
   const result = {
@@ -75,7 +84,7 @@ async function getNewsContent(body: string): Promise<NewsContent> {
 
   let content = "";
   const textBlocks = $('[data-component="text-block"]');
-  textBlocks.each((i, block) => {
+  textBlocks.each((_i, block) => {
     const blockElem = $(block);
     const text = blockElem.text().trim();
     if (text) {
