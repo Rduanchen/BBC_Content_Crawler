@@ -13,16 +13,10 @@ Please note that this scraper is designed for educational purposes and may not c
 1. Install dependencies:
 
 ```bash
-npm install
+npm install bbc-scraper
 ```
 
-2. Run the scraper:
-
-```bash
-npm start
-```
-
-3. Example usage in a script:
+2. Example usage in a script:
 
 ```typescript
 import { getBBCNewsTitles, getBBCNewsContent, configBBC } from "bbc-scraper";
@@ -44,7 +38,7 @@ async function main() {
 main().catch(console.error);
 ```
 
-4. Main functions:
+## Function Explanation
 
 - `configBBC(config: BBCConfig): void`: Configures the BBC scraper environment.
   Parameters:
