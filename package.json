@@ -1,5 +1,5 @@
 {
-  "name": "bbc_clawer",
+  "name": "bbc-scraper",
   "version": "1.0.2",
   "description": "A study purpose program for parsing bbc news titles and contents",
   "main": "dist/index.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Rduanchen/BBC_Content_Crawler.git"
+    "url": "https://github.com/Rduanchen/BBC_Scraper.git"
   },
   "scripts": {
     "build": "tsc",
@@ -30,6 +30,7 @@
     "typescript": "^5.9.2"
   },
   "devDependencies": {
+    "@types/node": "^24.2.1",
     "ts-node": "^10.9.2"
   }
 }
